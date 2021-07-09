@@ -1,0 +1,23 @@
+# phpstorm project files
+.idea
+build
+
+.phpintel
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# composer vendor dir
+src/vendor
+composer.lock
+yarn.lock
+package-lock.json
+env.php
+
+#nodemodules
+node_modules

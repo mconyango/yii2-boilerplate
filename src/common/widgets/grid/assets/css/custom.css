@@ -1,0 +1,33 @@
+table.kv-grid-table {
+    margin-bottom: 0;
+}
+
+table.kv-grid-table thead th {
+    text-transform: uppercase;
+}
+
+table.kv-grid-table tbody td a + a {
+    margin-left: 15px;
+}
+
+table.kv-grid-table tr.linkable:hover {
+    cursor: pointer;
+}
+
+.grid-view table > thead th, .grid-view table > thead th > a {
+    color: #5E5E5E;
+}
+
+.grid-view .table-condensed.table > tbody > tr > td, .grid-view .table-condensed.table > tbody > tr > th, .table-condensed.table > tfoot > tr > td, .table-condensed.table > tfoot > tr > th, .grid-view .table-condensed.table > thead > tr > td, .grid-view .table-condensed.table > thead > tr > th {
+    padding: 3px !important;
+    font-size: 1em;
+}
+
+/*Add spacing between buttons in button group*/
+.btn-space {
+    margin-right: 10px;
+}
+
+.panel > table.table-bordered.kv-grid-table > thead > tr:first-child > td, .panel > .table-responsive > table.table-bordered.kv-grid-table > thead > tr:first-child > td, .panel > table.table-bordered.kv-grid-table > tbody > tr:first-child > td, .panel > .table-responsive > table.table-bordered.kv-grid-table > tbody > tr:first-child > td, .panel > table.table-bordered.kv-grid-table > thead > tr:first-child > th, .panel > .table-responsive > table.table-bordered.kv-grid-table > thead > tr:first-child > th, .panel > table.table-bordered.kv-grid-table > tbody > tr:first-child > th, .panel > .table-responsive > table.table-bordered.kv-grid-table > tbody > tr:first-child > th {
+    border-bottom: 1px solid #ddd;
+}

@@ -1,0 +1,97 @@
+{
+  "name": "competamillman/boilerplate",
+  "description": "Yii2BoilerPlate",
+  "keywords": [
+    "ProjectName"
+  ],
+  "type": "project",
+  "license": "BSD-3-Clause",
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.1",
+    "ext-bcmath": "*",
+    "ext-curl": "*",
+    "ext-dom": "*",
+    "ext-fileinfo": "*",
+    "ext-gd": "*",
+    "ext-gmp": "*",
+    "ext-intl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "ext-pcre": "*",
+    "ext-pdo": "*",
+    "ext-xml": "*",
+    "ext-zip": "*",
+    "2amigos/qrcode-library": "~1.1",
+    "bizley/migration": "*",
+    "enqueue/amqp-lib": "^0.8",
+    "giggsey/libphonenumber-for-php": "^7.7",
+    "guzzlehttp/guzzle": "^6.2",
+    "illuminate/support": "^5.1",
+    "kartik-v/yii2-date-range": "*",
+    "kartik-v/yii2-grid": "@stable",
+    "kartik-v/yii2-icons": "@dev",
+    "kartik-v/yii2-mpdf": "*",
+    "kartik-v/yii2-number": "*",
+    "kartik-v/yii2-password": "*",
+    "kartik-v/yii2-widget-datepicker": "@stable",
+    "kartik-v/yii2-widget-depdrop": "^1.0",
+    "kartik-v/yii2-widget-fileinput": "@stable",
+    "kartik-v/yii2-widget-select2": "*",
+    "kartik-v/yii2-widget-spinner": "dev-master",
+    "kartik-v/yii2-widget-typeahead": "*",
+    "kidzen/yii2-dynamicform": "*",
+    "league/fractal": "^0.16.0",
+    "markrogoyski/math-php": "0.*",
+    "msheng/yii2-jwt": "^1.0",
+    "nesbot/carbon": "^2.0.0",
+    "php-amqplib/php-amqplib": "*",
+    "phpoffice/phpspreadsheet": "^1.2",
+    "picqer/php-barcode-generator": "^0.2.1",
+    "ramsey/uuid": "^3.1",
+    "sizeg/yii2-jwt": "^2.0",
+    "symfony/css-selector": "~2.8|~3.0",
+    "symfony/dom-crawler": "~2.8|~3.0",
+    "symfony/var-dumper": "^4.1",
+    "vova07/yii2-imperavi-widget": "^1.2",
+    "yii2mod/yii2-settings": "*",
+    "yii2mod/yii2-tree": "*",
+    "yii2tech/authlog": "^1.0",
+    "yiisoft/yii2": "~2.0.14",
+    "yiisoft/yii2-authclient": "^2.1",
+    "yiisoft/yii2-bootstrap": "*",
+    "yiisoft/yii2-debug": "^2.0",
+    "yiisoft/yii2-imagine": "^2.0",
+    "yiisoft/yii2-jui": "^2.0",
+    "yiisoft/yii2-queue": "^2.0",
+    "yiisoft/yii2-swiftmailer": "@stable"
+  },
+  "require-dev": {
+    "codeception/codeception": "*",
+    "codeception/specify": "*",
+    "codeception/verify": "*",
+    "yiisoft/yii2-faker": "*",
+    "yiisoft/yii2-gii": "*"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ],
+  "config": {
+    "vendor-dir": "src/vendor",
+    "process-timeout": 1800,
+    "sort-packages": true
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "php -r \"chmod( __DIR__ . '/uploads', 0777);\"",
+      "php -r \"chmod( __DIR__ . '/assets', 0777);\"",
+      "php -r \"chmod( __DIR__ . '/src/backend/runtime', 0777);\"",
+      "php -r \"chmod( __DIR__ . '/src/console/runtime', 0777);\"",
+      "php -r \"chmod( __DIR__ . '/src/api/runtime', 0777);\""
+    ]
+  }
+}

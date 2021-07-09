@@ -1,0 +1,75 @@
+/*DASHBOARD*/
+.shortcuts {
+    text-align: center;
+}
+
+.shortcuts .shortcut {
+    width: 110px;
+    height: 130px;
+    display: inline-block;
+    padding: 15px 5px;
+    margin: 0 5px 1em;
+    vertical-align: top;
+    text-decoration: none;
+    background: #F3F3F3;
+    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#ffffff), to(#eeeeee));
+    background-image: -webkit-linear-gradient(top, #ffffff, 0%, #eeeeee, 100%);
+    background-image: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%);
+    background-image: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.shortcuts .shortcut .fa {
+    width: 100%;
+    margin-top: .25em;
+    margin-bottom: .35em;
+    font-size: 32px;
+    color: #555;
+}
+
+.shortcuts .shortcut-label {
+    display: block;
+    margin-top: .50em;
+    font-weight: 400;
+    color: #666;
+}
+/*END DASHBOARD*/
+.report-list a {
+}
+
+.report-list .panel-body {
+    /*height: 100px;*/
+    height: 135px;
+}
+
+.report-list a:hover .report-name {
+    color: #0e75a7
+}
+
+.report-list a > span {
+    cursor: pointer;
+}
+
+.report-list:hover .panel-body {
+    background-color: #f5f5f5;
+}
+
+.report-list a:hover {
+    text-decoration: none;
+}
+
+.report-list a > span .report-name {
+    color: #1296d6;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 20px;
+    margin-bottom: 10px
+}
+
+.report-list a > span p {
+    color: #666
+}

@@ -1,0 +1,52 @@
+@media print {
+    * {
+        margin: 0 !important;
+        /*padding: 0!important;*/
+    }
+
+    html, body {
+        height: 100%;
+        overflow: hidden;
+        background: #FFF;
+    }
+
+    #transaction-receipt .table {
+        margin: 5px !important;
+    }
+
+    #transaction-receipt p, #transaction-receipt th, #transaction-receipt td {
+        font-size: 10px !important;
+        line-height: normal !important;
+    }
+
+    #transaction-receipt th, #transaction-receipt td {
+        padding: 2px !important;
+        line-height: 1 !important;
+    }
+
+    #transaction-receipt hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+
+    #transaction-receipt h1, #transaction-receipt h3 {
+        line-height: normal !important;
+        margin: 5px 0 !important;
+    }
+
+    #transaction-receipt img {
+        height: 80px !important;
+    }
+
+    #transaction-receipt h1 {
+        font-size: 18px !important;
+    }
+
+    #transaction-receipt h3 {
+        font-size: 14px;
+    }
+
+    #transaction-receipt p {
+        margin-bottom: 5px !important;
+    }
+}

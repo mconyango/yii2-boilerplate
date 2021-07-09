@@ -1,0 +1,21 @@
+.table.table-no-border > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-top: none;
+}
+
+.panel > table.table-bordered > thead > tr:first-child > td, .panel > .table-responsive > table.table-bordered > thead > tr:first-child > td, .panel > table.table-bordered > tbody > tr:first-child > td, .panel > .table-responsive > table.table-bordered > tbody > tr:first-child > td, .panel > table.table-bordered > thead > tr:first-child > th, .panel > .table-responsive > table.table-bordered > thead > tr:first-child > th, .panel > table.table-bordered > tbody > tr:first-child > th, .panel > .table-responsive > table.table-bordered > tbody > tr:first-child > th {
+    border-bottom: 1px solid #ddd;
+}
+
+#workflow-task-notif {
+    display: inline-block;
+    position: relative;
+}
+
+#workflow-task-count {
+    background-color: #f22c38;
+    color: white;
+    padding: 2px 4px 3px;
+    position: absolute;
+    top: -7px;
+    right: -7px;
+}
