@@ -4,7 +4,6 @@ namespace common\models;
 
 use backend\modules\auth\models\Users;
 use backend\modules\auth\models\AuditTrail;
-use backend\modules\core\models\ProcessTrait;
 use common\helpers\DateUtils;
 use common\helpers\DbUtils;
 use common\helpers\Utils;
@@ -34,7 +33,7 @@ use yii\web\NotFoundHttpException;
  */
 abstract class ActiveRecord extends AR
 {
-    use ControllerActionTrait, ProcessTrait, ReportsTrait;
+    use ControllerActionTrait, ReportsTrait;
 
     //used by getStats() function
     const STATS_TODAY = '1';

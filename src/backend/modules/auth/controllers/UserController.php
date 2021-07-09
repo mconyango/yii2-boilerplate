@@ -3,11 +3,7 @@
 namespace backend\modules\auth\controllers;
 
 use backend\modules\auth\Constants;
-use backend\modules\auth\models\UserLevels;
-use backend\modules\auth\Session;
-use backend\modules\core\models\Organization;
 use common\helpers\DateUtils;
-use common\helpers\DbUtils;
 use Yii;
 use backend\modules\auth\Acl;
 use backend\modules\auth\models\Users;
@@ -34,30 +30,19 @@ class UserController extends Controller
     }
 
 
-    public function actionIndex($level_id = null, $org_id = null, $name = null, $username = null, $email = null, $phone = null, $role_id = null, $status = Users::STATUS_ACTIVE, $from = null, $to = null)
+    public function actionIndex($level_id = null,  $name = null, $username = null, $email = null, $phone = null, $role_id = null, $status = Users::STATUS_ACTIVE, $from = null, $to = null)
     {
-        $orgModel = null;
-        if (Session::isOrganization()) {
-            $org_id = Session::accountId();
-            $level_id = UserLevels::LEVEL_ORGANIZATION;
-        }
-        if (!empty($org_id)) {
-            $orgModel = Organization::loadModel($org_id);
-        }
         $date_filter = DateUtils::getDateFilterParams($from, $to, 'last_login', false, false);
         $condition = $date_filter['condition'];
         $params = [];
 
         list($condition, $params) = Users::appendLevelCondition($condition, $params);
-        if (!empty($org_id)) {
-            list($condition, $params) = DbUtils::appendCondition('org_id', $org_id, $condition, $params);
-        }
 
         $searchModel = Users::searchModel([
             'defaultOrder' => ['username' => SORT_ASC],
             'condition' => $condition,
             'params' => $params,
-            'with' => ['level', 'role', 'org'],
+            'with' => ['level', 'role'],
         ]);
         $searchModel->level_id = $level_id;
         $searchModel->status = Users::STATUS_ACTIVE;
@@ -70,9 +55,7 @@ class UserController extends Controller
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'orgModel' => $orgModel,
             'filterOptions' => [
-                'org_id' => $org_id,
                 'level_id' => $level_id,
                 'name' => $name,
                 'username' => $username,
@@ -96,16 +79,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function actionCreate($level_id = null, $org_id = null)
+    public function actionCreate($level_id = null)
     {
-        if (Session::isOrganization()) {
-            $org_id = Session::accountId();
-            $level_id = UserLevels::LEVEL_ORGANIZATION;
-        }
-
         $model = new Users([
             'level_id' => $level_id,
-            'org_id' => $org_id,
             'status' => Users::STATUS_ACTIVE,
             'scenario' => Users::SCENARIO_CREATE,
             'send_email' => true,
@@ -121,7 +98,7 @@ class UserController extends Controller
         $model->ajaxValidate($validateAttributes);
         if (Yii::$app->request->isPost && $model->validate($validateAttributes) && $model->save(false)) {
             Yii::$app->session->setFlash(self::FLASH_SUCCESS, Lang::t('SUCCESS_MESSAGE'));
-            return $this->redirect(['index', 'level_id' => $model->level_id, 'org_id' => $model->org_id]);
+            return $this->redirect(['index', 'level_id' => $model->level_id]);
         }
 
         return $this->render('create', [
@@ -227,11 +204,9 @@ class UserController extends Controller
         return json_encode($response);
     }
 
-    public function actionGetList($org_id = null)
+    public function actionGetList()
     {
-        if (empty($org_id))
-            $org_id = null;
-        $data = Users::getListData('id', 'name', false, ['org_id' => $org_id]);
+        $data = Users::getListData('id', 'name', false, []);
         return json_encode($data);
     }
 }

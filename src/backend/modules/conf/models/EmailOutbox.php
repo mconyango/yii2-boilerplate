@@ -114,13 +114,13 @@ class EmailOutbox extends ActiveRecord implements ActiveSearchInterface
      */
     public static function decodeStatus($intValue)
     {
-        $stringValue=null;
-        switch ($intValue){
+        $stringValue = null;
+        switch ($intValue) {
             case self::STATUS_SUCCESS:
-                $stringValue='SUCCESS';
+                $stringValue = 'SUCCESS';
                 break;
             case self::STATUS_FAILED:
-                $stringValue='FAILED';
+                $stringValue = 'FAILED';
                 break;
         }
 
@@ -131,16 +131,17 @@ class EmailOutbox extends ActiveRecord implements ActiveSearchInterface
      * @param bool|string $tip
      * @return array
      */
-    public static function statusOptions($tip=false)
+    public static function statusOptions($tip = false)
     {
         return Utils::appendDropDownListPrompt([
-            self::STATUS_SUCCESS=>static::decodeStatus(self::STATUS_SUCCESS),
-            self::STATUS_FAILED=>static::decodeStatus(self::STATUS_FAILED),
-        ],$tip);
+            self::STATUS_SUCCESS => static::decodeStatus(self::STATUS_SUCCESS),
+            self::STATUS_FAILED => static::decodeStatus(self::STATUS_FAILED),
+        ], $tip);
     }
 
-    public function resendEmail($id){
-        $model=static::loadModel($id);
+    public static function resendEmail($id)
+    {
+        $model = static::loadModel($id);
 
 
         SendEmailJob::push([

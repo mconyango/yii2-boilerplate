@@ -6,7 +6,7 @@
  */
 return [
     'class' => \yii\db\Connection::class,
-    'dsn' => 'mysql:host=localhost;port=3306;dbname=saccohub',
+    'dsn' => 'mysql:host=localhost;port=3306;dbname=boilerplate',
     'username' => 'root',
     'password' => 'root',
     'charset' => 'utf8mb4',

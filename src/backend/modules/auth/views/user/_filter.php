@@ -22,43 +22,27 @@ $url = ['index'];
         <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
             <div class="panel-body">
                 <div class="row">
-                    <?php if (!\backend\modules\auth\Session::isOrganization()): ?>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <?= Html::label($model->getAttributeLabel('org_id'), null, ['class' => 'control-label']) ?>
-                                <?= Select2::widget([
-                                    'name' => 'org_id',
-                                    'value' => $filterOptions['org_id'],
-                                    'data' => \backend\modules\core\models\Organization::getListData('id', 'name', '--All--'),
-                                    'theme' => Select2::THEME_BOOTSTRAP,
-                                    'pluginOptions' => [
-                                        'allowClear' => false
-                                    ],
-                                ]); ?>
-                            </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <?= Html::label($model->getAttributeLabel('level_id'), null, ['class' => 'control-label']) ?>
+                            <?= Select2::widget([
+                                'name' => 'level_id',
+                                'value' => $filterOptions['level_id'],
+                                'data' => Users::levelIdListData('--All--'),
+                                'theme' => Select2::THEME_BOOTSTRAP,
+                                'pluginOptions' => [
+                                    'allowClear' => false
+                                ],
+                            ]); ?>
                         </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <?= Html::label($model->getAttributeLabel('level_id'), null, ['class' => 'control-label']) ?>
-                                <?= Select2::widget([
-                                    'name' => 'level_id',
-                                    'value' => $filterOptions['level_id'],
-                                    'data' => Users::levelIdListData('--All--'),
-                                    'theme' => Select2::THEME_BOOTSTRAP,
-                                    'pluginOptions' => [
-                                        'allowClear' => false
-                                    ],
-                                ]); ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
+                    </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <?= Html::label($model->getAttributeLabel('role_id'), null, ['class' => 'control-label']) ?>
                             <?= Select2::widget([
                                 'name' => 'role_id',
                                 'value' => $filterOptions['role_id'],
-                                'data' => \backend\modules\auth\models\Roles::getListData('id', 'name', '--All--', \backend\modules\auth\Session::isOrganization() ? ['level_id' => \backend\modules\auth\models\UserLevels::LEVEL_ORGANIZATION] : []),
+                                'data' => \backend\modules\auth\models\Roles::getListData('id', 'name', '--All--', []),
                                 'theme' => Select2::THEME_BOOTSTRAP,
                                 'pluginOptions' => [
                                     'allowClear' => false

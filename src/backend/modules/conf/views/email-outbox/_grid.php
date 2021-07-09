@@ -16,13 +16,6 @@ use common\widgets\grid\GridView;
             'attribute' => 'id',
         ],
         [
-            'attribute' => 'org_id',
-            'value' => function (EmailOutbox $model) {
-                return $model->getRelationAttributeValue('org', 'name');
-            },
-            'visible' => !\backend\modules\auth\Session::isOrganization(),
-        ],
-        [
             'attribute' => 'recipient_email',
 
         ],
@@ -71,15 +64,15 @@ use common\widgets\grid\GridView;
             'class' => common\widgets\grid\ActionColumn::class,
             'template' => '{view}{delete}{resend}',
             'buttons' => [
-                'resend' => function ($url,EmailOutbox $model, $key) {
+                'resend' => function ($url, EmailOutbox $model, $key) {
                     return \yii\helpers\Html::a('Resend', '#', [
                         'class' => 'grid-update',
                         'data-href' => $url,
-                        'data-data-type'=>'json',
-                        'data-grid'=>$model->getPjaxWidgetId(),
-                        'data-confirm-message'=>\common\helpers\Lang::t('Do you want to resend this Email?')
+                        'data-data-type' => 'json',
+                        'data-grid' => $model->getPjaxWidgetId(),
+                        'data-confirm-message' => \common\helpers\Lang::t('Do you want to resend this Email?')
                     ]);
-                    }
+                }
             ],
             'viewOptions' => [
                 'label' => '<i class="fa fa-eye"></i>',

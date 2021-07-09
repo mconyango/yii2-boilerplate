@@ -5,10 +5,6 @@ namespace backend\modules\auth\models;
 
 use backend\modules\auth\Session;
 use backend\modules\conf\settings\SystemSettings;
-use backend\modules\core\models\BranchArea;
-use backend\modules\core\models\Organization;
-use backend\modules\core\models\OrganizationBranch;
-use backend\modules\core\models\OrganizationDataTrait;
 use common\helpers\DbUtils;
 use common\helpers\FileManager;
 use common\helpers\Lang;
@@ -24,13 +20,11 @@ use yii\web\NotFoundHttpException;
  * This is the model class for table "auth_users".
  *
  * @property integer $branch_id
- * @property int $org_id
  *
- * @property Organization $org
  */
 class Users extends UserIdentity implements ActiveSearchInterface
 {
-    use ActiveSearchTrait, OrganizationDataTrait, UserNotificationTrait;
+    use ActiveSearchTrait, UserNotificationTrait;
 
     /**
      *
@@ -66,7 +60,7 @@ class Users extends UserIdentity implements ActiveSearchInterface
         return [
             [['name', 'username', 'email', 'level_id'], 'required', 'on' => [self::SCENARIO_CREATE, self::SCENARIO_UPDATE]],
             ['email', 'email'],
-            [['level_id', 'role_id', 'org_id', 'auto_generate_password', 'branch_id', 'require_password_change'], 'integer'],
+            [['level_id', 'role_id', 'auto_generate_password', 'branch_id', 'require_password_change'], 'integer'],
             [['name', 'profile_image'], 'string', 'max' => 128],
             ['username', 'string', 'min' => 4, 'max' => 30],
             // password field is required on 'create' scenario
@@ -138,7 +132,6 @@ class Users extends UserIdentity implements ActiveSearchInterface
             'updated_at' => Lang::t('Updated At'),
             'last_login' => Lang::t('Last Login'),
             'send_email' => Lang::t('Email the login details to the user.'),
-            'org_id' => Lang::t('Organization'),
             'auto_generate_password' => Lang::t('Auto Generate Password'),
             'branch_id' => Lang::t('Branch'),
             'require_password_change' => Lang::t('Force password change on login')
@@ -158,7 +151,6 @@ class Users extends UserIdentity implements ActiveSearchInterface
             'status',
             'level_id',
             'role_id',
-            'org_id',
             'is_main_account',
             'branch_id',
         ];
@@ -169,9 +161,6 @@ class Users extends UserIdentity implements ActiveSearchInterface
      */
     public function beforeSave($insert)
     {
-        if ($this->level_id == UserLevels::LEVEL_DEV || $this->level_id == UserLevels::LEVEL_SUPER_ADMIN || $this->level_id == UserLevels::LEVEL_ADMIN) {
-            $this->org_id = null;
-        }
         return parent::beforeSave($insert);
     }
 
@@ -192,7 +181,6 @@ class Users extends UserIdentity implements ActiveSearchInterface
      */
     public static function getListData($valueColumn = 'id', $textColumn = 'name', $prompt = true, $condition = ['status' => self::STATUS_ACTIVE], $params = [], $options = [])
     {
-        list($condition, $params) = static::appendOrgSessionIdCondition($condition, $params, false);
         $options['orderBy'] = ['name' => SORT_ASC];
         return parent::getListData($valueColumn, $textColumn, $prompt, $condition, $params, $options);
     }
@@ -249,7 +237,7 @@ class Users extends UserIdentity implements ActiveSearchInterface
      * @param mixed $tip
      * @return array
      */
-    public static function levelIdListData($tip=false)
+    public static function levelIdListData($tip = false)
     {
         list($condition, $params) = static::appendLevelCondition(null, [], 'id');
         return UserLevels::getListData('id', 'name', $tip, $condition, $params, ['orderBy' => ['id' => SORT_ASC]]);
@@ -394,25 +382,7 @@ class Users extends UserIdentity implements ActiveSearchInterface
             if ($throwException) {
                 throw new NotFoundHttpException('The requested resource was not found.');
             }
-        } elseif (Utils::isWebApp() && Session::isOrganization() && $model->org_id != Session::accountId()) {
-            throw new ForbiddenHttpException();
         }
         return $model;
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrg()
-    {
-        return $this->hasOne(Organization::class, ['id' => 'org_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBranch()
-    {
-        return $this->hasOne(OrganizationBranch::class, ['id' => 'branch_id']);
     }
 }

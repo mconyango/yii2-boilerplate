@@ -1,8 +1,5 @@
 <?php
 
-use backend\modules\auth\Session;
-use backend\modules\conf\settings\SystemSettings;
-use backend\modules\core\models\Organization;
 use common\helpers\Lang;
 use common\helpers\Url;
 use common\widgets\select2\Select2;
@@ -24,30 +21,6 @@ use backend\modules\auth\models\AuditTrail;
     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
         <div class="panel-body">
             <div class="row">
-                <?php if (!Session::isOrganization()): ?>
-                    <!-- FILTER FOR ORG -->
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <?= Html::label($model->getAttributeLabel('org_id'), "", ['class' => 'control-label']) ?>
-                            <?= Select2::widget([
-                                'name' => 'org_id',
-                                'value' => $filterOptions['org_id'],
-                                'data' => Organization::getListData('id', 'name', SystemSettings::getCompanyName()),
-                                'theme' => Select2::THEME_BOOTSTRAP,
-                                'options' => [
-                                    'class' => 'form-control parent-depdropdown',
-                                    'data-child-selectors' => [
-                                        '#' . Html::getInputId($model, 'user_id'),
-                                    ],
-                                ],
-                                'pluginOptions' => [
-                                    'allowClear' => false
-                                ],
-                            ]); ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
-
                 <!-- FILTER FOR USER -->
                 <div class="col-sm-2">
                     <div class="form-group">
@@ -59,7 +32,7 @@ use backend\modules\auth\models\AuditTrail;
                             'theme' => Select2::THEME_BOOTSTRAP,
                             'options' => [
                                 'id' => Html::getInputId($model, 'user_id'),
-                                'data-url' => Url::to(['user/get-list', 'org_id' => 'idV']),
+                                'data-url' => Url::to(['user/get-list']),
                                 'data-selected' => $filterOptions['user_id'],
                             ],
                             'pluginOptions' => [

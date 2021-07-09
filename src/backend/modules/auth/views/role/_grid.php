@@ -52,7 +52,7 @@ use yii\helpers\Url;
             'width' => '150px',
             'buttons' => [
                 'update' => function ($url, Roles $model) {
-                    return Yii::$app->user->canUpdate() && !Session::isOrganization() ? Html::a('<i class="fa fa-pencil text-success"></i>', $url, [
+                    return Yii::$app->user->canUpdate() ? Html::a('<i class="fa fa-pencil text-success"></i>', $url, [
                         'data-pjax' => 0,
                         'class' => 'show_modal_form',
                         'data-grid' => $model->getPjaxWidgetId(),

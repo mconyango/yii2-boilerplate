@@ -32,7 +32,7 @@
     "kartik-v/yii2-date-range": "*",
     "kartik-v/yii2-grid": "@stable",
     "kartik-v/yii2-icons": "@dev",
-    "kartik-v/yii2-mpdf": "*",
+    "kartik-v/yii2-mpdf": "dev-master",
     "kartik-v/yii2-number": "*",
     "kartik-v/yii2-password": "*",
     "kartik-v/yii2-widget-datepicker": "@stable",

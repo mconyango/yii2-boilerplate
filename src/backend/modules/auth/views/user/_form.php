@@ -1,8 +1,6 @@
 <?php
 
-use backend\modules\auth\models\UserLevels;
 use backend\modules\auth\models\Users;
-use backend\modules\auth\Session;
 use common\helpers\Lang;
 use common\helpers\Url;
 use common\widgets\select2\Select2;
@@ -34,70 +32,44 @@ $form = ActiveForm::begin([
 ]);
 ?>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <?= Html::encode($this->title) ?>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <?= Html::errorSummary([$model], ['class' => 'alert alert-danger']) ?>
-            <?php if ($model->checkPermission(false, true)) : ?>
-                <div class="row">
-                <div class="col-md-4">
-                    <?= $form->field($model, 'level_id')->widget(Select2::class, [
-                        'data' => Users::levelIdListData(),
-                        'theme' => Select2::THEME_BOOTSTRAP,
-                        'options' => [
-                            'class' => 'form-control parent-depdropdown',
-                            'data-child-selectors' => [
-                                '#' . Html::getInputId($model, 'role_id'),
-                            ],
-                            'data-show-organization' => [UserLevels::LEVEL_ORGANIZATION, UserLevels::LEVEL_ORGANIZATION_CLIENT]
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <?= Html::encode($this->title) ?>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <?= Html::errorSummary([$model], ['class' => 'alert alert-danger']) ?>
+        <?php if ($model->checkPermission(false, true)) : ?>
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($model, 'level_id')->widget(Select2::class, [
+                    'data' => Users::levelIdListData(),
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => [
+                        'class' => 'form-control parent-depdropdown',
+                        'data-child-selectors' => [
+                            '#' . Html::getInputId($model, 'role_id'),
                         ],
-                        'pluginOptions' => [
-                            'allowClear' => false
-                        ],
-                    ]) ?>
-                </div>
-                <?php if (!Session::isOrganization()): ?>
-                    <div class="col-md-4" id="organization-id-wrapper">
-                        <?= $form->field($model, 'org_id')->widget(Select2::class, [
-                            'data' => \backend\modules\core\models\Organization::getListData(),
-                            'theme' => Select2::THEME_BOOTSTRAP,
-                            'pluginOptions' => [
-                                'allowClear' => false
-                            ],
-                        ]) ?>
-                    </div>
-                <?php endif; ?>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'role_id')->widget(Select2::class, [
-                        'data' => \backend\modules\auth\models\Roles::getListData('id', 'name', false, Session::isOrganization() ? ['level_id' => UserLevels::LEVEL_ORGANIZATION, 'org_id' => Session::accountId()] : []),
-                        'theme' => Select2::THEME_BOOTSTRAP,
-                        'options' => [
-                            'data-url' => Url::to(['role/get-list', 'level_id' => 'idV']),
-                            'data-selected' => $model->role_id,
-                        ],
-                        'pluginOptions' => [
-                            'allowClear' => false
-                        ],
-                    ]) ?>
-                </div>
-                <?php if (Session::isOrganization()): ?>
-                    <div class="col-md-4">
-                        <?= $form->field($model, 'branch_id')->widget(Select2::class, [
-                            'data' => \backend\modules\core\models\OrganizationBranch::getListData('id', 'name', false, Session::isOrganization() ? ['org_id' => Session::accountId()] : []),
-                            'theme' => Select2::THEME_BOOTSTRAP,
-                            'options' => [
-                            ],
-                            'pluginOptions' => [
-                                'allowClear' => false
-                            ],
-                        ]) ?>
-                    </div>
-                    </div>
-                <?php endif; ?>
-                <hr/>
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => false
+                    ],
+                ]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'role_id')->widget(Select2::class, [
+                    'data' => \backend\modules\auth\models\Roles::getListData('id', 'name', false, []),
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => [
+                        'data-url' => Url::to(['role/get-list', 'level_id' => 'idV']),
+                        'data-selected' => $model->role_id,
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => false
+                    ],
+                ]) ?>
+            </div>
+            <hr/>
             <?php endif; ?>
             <div class="row">
                 <div class="col-md-8">

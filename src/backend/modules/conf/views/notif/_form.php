@@ -1,7 +1,6 @@
 <?php
 
 use backend\modules\auth\models\Roles;
-use backend\modules\auth\models\UserLevels;
 use backend\modules\auth\models\Users;
 use backend\modules\auth\Session;
 use backend\modules\conf\models\NotifTypes;
@@ -54,27 +53,15 @@ $form = ActiveForm::begin([
                     'Template for displaying notification within this system<br>Please do not remove placeholders (terms enclosed in {{}})'
                 ); ?>
                 <?= $form->field($model, 'enable_email_notification')->checkbox(); ?>
-                <?php if (Session::isOrganization()): ?>
-                    <?= $form->field($model, 'email_template_id')->dropDownList(\backend\modules\conf\models\EmailTemplate::getListData('template_id', 'name', false, '', ['org_id' => [Session::accountId(), null]])); ?>
-                <?php else: ?>
-                    <?= $form->field($model, 'email_template_id')->dropDownList(\backend\modules\conf\models\EmailTemplate::getListData('template_id', 'name', [])); ?>
-                <?php endif; ?>
+                <?= $form->field($model, 'email_template_id')->dropDownList(\backend\modules\conf\models\EmailTemplate::getListData('template_id', 'name', [])); ?>
                 <?= $form->field($model, 'enable_sms_notification')->checkbox(); ?>
-                <?php if (Session::isOrganization()): ?>
-                    <?= $form->field($model, 'sms_template_id')->dropDownList(\backend\modules\conf\models\SmsTemplate::getListData('code', 'name', false, '', ['org_id' => [Session::accountId(), null]])); ?>
-                <?php else: ?>
-                    <?= $form->field($model, 'sms_template_id')->dropDownList(\backend\modules\conf\models\SmsTemplate::getListData('code', 'name')); ?>
-                <?php endif; ?>
+                <?= $form->field($model, 'sms_template_id')->dropDownList(\backend\modules\conf\models\SmsTemplate::getListData('code', 'name')); ?>
                 <?= $form->field($model, 'is_active')->checkbox(); ?>
             </fieldset>
             <fieldset>
                 <legend><?= Lang::t('People to notify') ?></legend>
                 <?= $form->field($model, 'notify_all_users')->checkbox(); ?>
-                <?php if (Session::isOrganization()): ?>
-                    <?= $form->field($model, 'users')->dropDownList(Users::getListData('id', 'name', false, '[[status]]=:t2 AND [[org_id]]=:org_id', [':t2' => Users::STATUS_ACTIVE, ':org_id' => Session::accountId()]), ['multiple' => true, 'class' => 'form-control select2']); ?>
-                <?php else: ?>
-                    <?= $form->field($model, 'users')->dropDownList(Users::getListData('id', 'name', false, '[[status]]=:t2', [':t2' => Users::STATUS_ACTIVE]), ['multiple' => true, 'class' => 'form-control select2']); ?>
-                <?php endif; ?>
+                <?= $form->field($model, 'users')->dropDownList(Users::getListData('id', 'name', false, '[[status]]=:t2', [':t2' => Users::STATUS_ACTIVE]), ['multiple' => true, 'class' => 'form-control select2']); ?>
                 <?= $form->field($model, 'roles')->dropDownList(Roles::getListData('id', 'name'), ['multiple' => true, 'class' => 'select2']); ?>
                 <?= $form->field($model, 'email')->textarea(['class' => 'form-control', 'rows' => 3])->hint('Comma separated email addresses to receive email notification.'); ?>
                 <?php //echo $form->field($model, 'phone')->hint('Comma separated phone numbers to receive SMS notification.'); ?>

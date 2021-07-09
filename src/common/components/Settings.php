@@ -9,10 +9,6 @@
 namespace common\components;
 
 
-use backend\modules\auth\Session;
-use common\helpers\Utils;
-use Yii;
-
 class Settings extends \yii2mod\settings\components\Settings
 {
     /**
@@ -47,17 +43,10 @@ class Settings extends \yii2mod\settings\components\Settings
 
     /**
      * @param string $section
-     * @param null|int $org_id
      * @return string
      */
-    public static function getQualifiedSection($section, $org_id = null)
+    public static function getQualifiedSection($section)
     {
-        if (Utils::isWebApp() && !Yii::$app->user->getIsGuest() && Session::isOrganization()) {
-            $org_id = Session::accountId();
-        }
-        if (!empty($org_id)) {
-            $section .= '_org_' . $org_id;
-        }
         return $section;
     }
 

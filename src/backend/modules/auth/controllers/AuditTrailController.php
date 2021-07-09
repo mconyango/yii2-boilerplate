@@ -10,8 +10,6 @@ namespace backend\modules\auth\controllers;
 
 use backend\modules\auth\Constants;
 use backend\modules\auth\models\AuditTrail;
-use backend\modules\auth\Session;
-use backend\modules\core\models\Organization;
 use common\helpers\DateUtils;
 
 class AuditTrailController extends Controller
@@ -27,15 +25,8 @@ class AuditTrailController extends Controller
         $this->activeSubMenu = Constants::SUBMENU_AUDIT_TRAIL;
     }
 
-    public function actionIndex($user_id = null, $org_id = null, $action = null, $from = null, $to = null)
+    public function actionIndex($user_id = null,  $action = null, $from = null, $to = null)
     {
-        $orgModel = null;
-        if (Session::isOrganization()) {
-            $org_id = Session::accountId();
-        }
-        if (!empty($org_id)) {
-            $orgModel = Organization::loadModel($org_id);
-        }
         $date_filter = DateUtils::getDateFilterParams($from, $to, 'created_at', true, true);
         $condition = $date_filter['condition'];
         $params = [];
@@ -46,19 +37,16 @@ class AuditTrailController extends Controller
             'with' => ['user'],
         ]);
         $searchModel->user_id = $user_id;
-        $searchModel->org_id = $org_id;
         $searchModel->action = $action;
 
         return $this->render('index', [
             'filterOptions' => [
                 'user_id' => $user_id,
-                'org_id' => $org_id,
                 'action' => $action,
                 'from' => $date_filter['from'],
                 'to' => $date_filter['to'],
             ],
             'searchModel' => $searchModel,
-            'orgModel' => $orgModel,
         ]);
     }
 

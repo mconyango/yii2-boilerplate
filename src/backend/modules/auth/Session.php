@@ -51,45 +51,6 @@ class Session
     }
 
     /**
-     * @return bool
-     */
-    public static function isOrganization()
-    {
-        if (Yii::$app->user->isGuest) {
-            return false;
-        }
-        return Yii::$app->user->identity->level_id == UserLevels::LEVEL_ORGANIZATION;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function isOrgClient()
-    {
-        if (Yii::$app->user->isGuest) {
-            return false;
-        }
-        return Yii::$app->user->identity->level_id == UserLevels::LEVEL_ORGANIZATION_CLIENT;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function isPrivilegedAdmin()
-    {
-        return static::isDev() || static::isSuperAdmin() || static::isSystemAdmin();
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function accountId()
-    {
-        return Yii::$app->user->identity->org_id;
-    }
-
-
-    /**
      * @return int|string
      */
     public static function userId()

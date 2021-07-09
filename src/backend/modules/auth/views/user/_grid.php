@@ -1,6 +1,5 @@
 <?php
 
-use backend\modules\auth\Session;
 use common\widgets\grid\GridView;
 use common\helpers\Lang;
 use yii\helpers\Html;
@@ -39,14 +38,6 @@ use yii\helpers\Url;
             'value' => function (Users $model) {
                 return $model->getRelationAttributeValue('level', 'name');
             },
-            'visible' => !Session::isOrganization(),
-        ],
-        [
-            'attribute' => 'org_id',
-            'value' => function (Users $model) {
-                return $model->getRelationAttributeValue('org', 'name');
-            },
-            'visible' => !Session::isOrganization(),
         ],
         [
             'attribute' => 'role_id',

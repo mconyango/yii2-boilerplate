@@ -65,12 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => $model->getRelationAttributeValue('role', 'name'),
                     ],
                     [
-                        'attribute' => 'org_id',
-                        'value' => Html::a($model->getRelationAttributeValue('org', 'name') . ' <i class="fa fa-external-link"></i>', ['/core/organization/view', 'id' => $model->org_id], ['target' => '_blank']),
-                        'format' => 'raw',
-                        'visible' => $model->org !== null && !\backend\modules\auth\Session::isOrganization(),
-                    ],
-                    [
                         'attribute' => 'branch_id',
                         'value' => $model->getRelationAttributeValue('branch', 'name'),
                     ],

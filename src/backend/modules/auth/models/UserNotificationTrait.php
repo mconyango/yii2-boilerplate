@@ -9,7 +9,6 @@
 namespace backend\modules\auth\models;
 
 
-use backend\modules\auth\Session;
 use backend\modules\conf\models\EmailTemplate;
 use backend\modules\conf\settings\SystemSettings;
 use console\jobs\SendEmailJob;
@@ -57,13 +56,7 @@ trait UserNotificationTrait
         }
 
         $template_id = 'user_login_details';
-        $template = EmailTemplate::loadModel(['template_id' => $template_id, 'org_id' => null], false);
-        if (Session::isOrganization()) {
-            $orgTemp = EmailTemplate::findOne(['template_id' => $template_id, 'org_id' => Session::accountId()]);
-            if ($orgTemp !== null) {
-                $template = $orgTemp;
-            }
-        }
+        $template = EmailTemplate::loadModel(['template_id' => $template_id], false);
         if (null === $template) {
             return false;
         }
@@ -86,7 +79,6 @@ trait UserNotificationTrait
             'recipient_email' => $this->email,
             'template_id' => $template_id,
             'ref_id' => $this->id,
-            'org_id' => $this->org_id,
         ]);
     }
 }

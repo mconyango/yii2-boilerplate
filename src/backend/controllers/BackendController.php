@@ -10,13 +10,9 @@ namespace backend\controllers;
 
 use backend\modules\auth\Acl;
 use backend\modules\auth\models\Users;
-use backend\modules\auth\Session;
-use backend\modules\subscription\models\OrgSubscription;
 use common\controllers\Controller;
 use common\helpers\Utils;
 use Yii;
-use yii\helpers\Url;
-use yii\web\ForbiddenHttpException;
 
 class BackendController extends Controller
 {
@@ -143,21 +139,6 @@ class BackendController extends Controller
     {
         if (in_array($this->route, ['dashboard/default/status', 'error/index'])) {
             return true;
-        }
-        if (Session::isOrganization()) {
-            $activeSub = OrgSubscription::loadModel(['status' => OrgSubscription::STATUS_ACTIVE, 'org_id' => Session::accountId()], false);
-            if ($activeSub !== null) {
-                // if there's an active subscription, check allowed modules for the organization
-                if ($activeSub->canAccessModule($this->module->id)) {
-                    return true;
-                }
-                throw new ForbiddenHttpException('You are Not Allowed to access this Module');
-                //return false;
-            }
-            if (!Yii::$app->request->isAjax) {
-                return $this->redirect(['/dashboard/default/status']);
-            }
-            return false;
         }
         return true;
     }

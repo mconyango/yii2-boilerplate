@@ -35,7 +35,6 @@ class Client extends \backend\modules\core\models\Client {
         if (empty($file_path)) {
             return null;
         }
-        //$url = Yii::getAlias('@appRoot') . '/uploads/organizations/' . $this->org->code . '/clients/' . $this->code . '/' . $this->passport_photo;
         $asset = Yii::$app->getAssetManager()->publish($file_path);
 
         return Url::to('/', true) .$asset[1];

@@ -9,7 +9,6 @@ namespace backend\modules\conf\controllers;
 
 
 use backend\modules\auth\Acl;
-use backend\modules\auth\Session;
 use backend\modules\conf\Constants;
 use backend\modules\conf\models\EmailOutbox;
 
@@ -23,13 +22,9 @@ class EmailOutboxController extends Controller
         $this->activeSubMenu = Constants::SUBMENU_EMAIL;
     }
 
-    public function actionIndex($org_id = null)
+    public function actionIndex()
     {
-        if (Session::isOrganization()) {
-            $org_id = Session::accountId();
-        }
         $searchModel = EmailOutbox::searchModel(['defaultOrder' => ['id' => SORT_DESC]]);
-        $searchModel->org_id = $org_id;
         return $this->render('index', [
             'searchModel' => $searchModel,
         ]);
@@ -51,7 +46,8 @@ class EmailOutboxController extends Controller
         EmailOutbox::softDelete($id);
     }
 
-    public function actionResend($id){
+    public function actionResend($id)
+    {
         $this->hasPrivilege(Acl::ACTION_UPDATE);
 
         EmailOutbox::resendEmail($id);

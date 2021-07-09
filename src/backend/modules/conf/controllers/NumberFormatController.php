@@ -7,7 +7,6 @@
 
 namespace backend\modules\conf\controllers;
 
-use backend\modules\auth\Session;
 use backend\modules\conf\models\NumberingFormat;
 
 class NumberFormatController extends DevController
@@ -21,15 +20,10 @@ class NumberFormatController extends DevController
         $this->resourceLabel = 'Number Format';
     }
 
-    public function actionIndex($org_id = null)
+    public function actionIndex()
     {
-        if (Session::isOrganization()) {
-            $org_id = Session::accountId();
-        }
-        $condition = ['org_id' => $org_id];
         $searchModel = NumberingFormat::searchModel([
             'defaultOrder' => ['id' => SORT_ASC],
-            'condition' => $condition,
         ]);
         $searchModel->is_active = 1;
 
