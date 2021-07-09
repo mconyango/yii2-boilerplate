@@ -2,14 +2,12 @@
 
 namespace backend\modules\conf\models;
 
-use backend\modules\core\models\Organization;
 use common\helpers\Lang;
 use common\helpers\Utils;
 use common\models\ActiveRecord;
 use common\models\ActiveSearchInterface;
 use common\models\ActiveSearchTrait;
 use console\jobs\SendEmailJob;
-use Yii;
 
 /**
  * This is the model class for table "email_outbox".
@@ -29,10 +27,8 @@ use Yii;
  * @property string $date_queued
  * @property string $date_sent
  * @property integer $created_by
- * @property integer $org_id
  * @property integer $attempts
  *
- * @property Organization $org
  */
 class EmailOutbox extends ActiveRecord implements ActiveSearchInterface
 {
@@ -57,7 +53,7 @@ class EmailOutbox extends ActiveRecord implements ActiveSearchInterface
         return [
             [['message', 'sender_email', 'recipient_email'], 'required'],
             [['message'], 'string'],
-            [['template_id', 'ref_id', 'org_id'], 'integer'],
+            [['template_id', 'ref_id'], 'integer'],
             [['subject'], 'string', 'max' => 255],
             [['sender_name'], 'string', 'max' => 60],
             [['sender_email', 'recipient_email'], 'email'],
@@ -84,17 +80,8 @@ class EmailOutbox extends ActiveRecord implements ActiveSearchInterface
             'recipient_email' => Lang::t('To'),
             'created_at' => Lang::t('Queued At'),
             'created_by' => Lang::t('Created By'),
-            'org_id' => Lang::t('Organization'),
             'date_sent' => Lang::t('Time Sent'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrg()
-    {
-        return $this->hasOne(Organization::class, ['id' => 'org_id']);
     }
 
     public function searchParams()
@@ -104,7 +91,6 @@ class EmailOutbox extends ActiveRecord implements ActiveSearchInterface
             ['sender_email', 'sender_email'],
             ['subject', 'subject'],
             'template_id',
-            'org_id',
         ];
     }
 
@@ -155,7 +141,6 @@ class EmailOutbox extends ActiveRecord implements ActiveSearchInterface
             'subject' => $model->subject,
             'template_id' => $model->template_id,
             'ref_id' => $model->ref_id,
-            'org_id' => $model->org_id,
         ]);
     }
 }

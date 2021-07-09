@@ -102,7 +102,7 @@ class BaseNotification extends BaseObject
      */
     public static function processEmailTemplate($notifType, $itemId)
     {
-        $emailTemplateModel = EmailTemplate::loadModel(['template_id' => $notifType->email_template_id, 'org_id' => null], false);
+        $emailTemplateModel = EmailTemplate::loadModel(['template_id' => $notifType->email_template_id], false);
         if (null === $emailTemplateModel) {
             return false;
         }
@@ -121,21 +121,6 @@ class BaseNotification extends BaseObject
     }
 
     /**
-     * @param NotifTypes $notifType
-     * @param string $itemId
-     * @return array|bool
-     * @throws \yii\web\NotFoundHttpException
-     */
-    public static function processSmsTemplate($notifType, $itemId)
-    {
-        $smsTemplateModel = SmsTemplate::loadModel(['code' => $notifType->sms_template_id, 'org_id' => null], false);
-        if (null === $smsTemplateModel) {
-            return false;
-        }
-        return static::processTemplate($itemId, $smsTemplateModel->template);
-    }
-
-    /**
      *
      * @param string $template
      * @param string $item_id
@@ -146,7 +131,7 @@ class BaseNotification extends BaseObject
      */
     public static function processInternalTemplate($template, $item_id, $notif_type_id)
     {
-        $notifModel = NotifTypes::loadModel(['template_id' => $notif_type_id, 'org_id' => null], false);
+        $notifModel = NotifTypes::loadModel(['template_id' => $notif_type_id], false);
         if (null === $notifModel) {
             return false;
         }

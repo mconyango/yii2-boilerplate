@@ -35,12 +35,6 @@ use yii\helpers\Html;
             'attribute' => 'ip_address',
         ],
         [
-            'attribute' => 'org_id',
-            'value' => function (AuditTrail $model) {
-                 return $model->getRelationAttributeValue('org', 'name');
-            }
-        ],
-        [
             'attribute' => 'created_at',
             'value' => function (AuditTrail $model) {
                 return DateUtils::formatToLocalDate($model->created_at);

@@ -2,10 +2,6 @@
 
 namespace backend\modules\conf\models;
 
-use backend\modules\core\models\GlobalMasterDataTrait;
-use backend\modules\core\models\Organization;
-use backend\modules\core\models\OrganizationDataTrait;
-use common\helpers\DbUtils;
 use common\helpers\Lang;
 use common\models\ActiveRecord;
 use common\models\ActiveSearchInterface;
@@ -24,7 +20,6 @@ use yii\helpers\ArrayHelper;
  * @property string $prefix
  * @property string $suffix
  * @property string $preview
- * @property int $org_id
  * @property int $is_private
  * @property int $is_active
  * @property string $created_at
@@ -32,7 +27,7 @@ use yii\helpers\ArrayHelper;
  */
 class NumberingFormat extends ActiveRecord implements ActiveSearchInterface
 {
-    use ActiveSearchTrait, OrganizationDataTrait, GlobalMasterDataTrait;
+    use ActiveSearchTrait;
 
     /**
      * @inheritdoc
@@ -62,12 +57,12 @@ class NumberingFormat extends ActiveRecord implements ActiveSearchInterface
     {
         return [
             [['code', 'name'], 'required'],
-            [['next_number', 'min_digits', 'org_id', 'is_private', 'is_active'], 'integer'],
+            [['next_number', 'min_digits', 'is_private', 'is_active'], 'integer'],
             [['code'], 'string', 'max' => 60],
             [['name'], 'string', 'max' => 255],
             [['prefix', 'suffix'], 'string', 'max' => 5],
             [['preview'], 'string', 'max' => 128],
-            [['code'], 'unique', 'targetAttribute' => ['org_id', 'code'], 'message' => Lang::t('{attribute} {value} has been defined')],
+            [['code'], 'unique', 'message' => Lang::t('{attribute} {value} has been defined')],
             [[self::SEARCH_FIELD], 'safe', 'on' => self::SCENARIO_SEARCH],
         ];
     }
@@ -87,7 +82,6 @@ class NumberingFormat extends ActiveRecord implements ActiveSearchInterface
             'prefix' => Lang::t('Prefix'),
             'suffix' => Lang::t('Suffix'),
             'preview' => Lang::t('Preview'),
-            'org_id' => Lang::t('Organization'),
             'is_private' => Lang::t('Private'),
             'is_active' => Lang::t('Active'),
         ];
@@ -97,15 +91,13 @@ class NumberingFormat extends ActiveRecord implements ActiveSearchInterface
      * Get next formatted number
      * @param string $code
      * @param boolean $increment_next_number
-     * @param null|int $org_id
      * @return string $formatted_number
      * @throws \yii\db\Exception
      */
-    public static function getNextFormattedNumber($code, $increment_next_number = true, $org_id = null)
+    public static function getNextFormattedNumber($code, $increment_next_number = true)
     {
         $condition = '[[code]]=:code';
         $params = [':code' => $code];
-        list($condition, $params) = DbUtils::appendCondition('org_id', $org_id, $condition, $params);
         $format = static::getOneRow('*', $condition, $params);
         $next_number = ArrayHelper::getValue($format, 'next_number', 1);
         $min_digits = ArrayHelper::getValue($format, 'min_digits', 3);
@@ -135,41 +127,12 @@ class NumberingFormat extends ActiveRecord implements ActiveSearchInterface
         return [
             ['code', 'code'],
             ['name', 'name'],
-            'org_id',
             'is_active',
         ];
     }
 
     public function afterSave($insert, $changedAttributes)
     {
-        if ($insert) {
-            $this->cascadeNumberingFormat();
-        }
         parent::afterSave($insert, $changedAttributes);
     }
-
-    protected function cascadeNumberingFormat()
-    {
-        if ($this->is_private || !empty($this->org_id)) {
-            return false;
-        }
-        //get all organizations
-        $model = new static([
-            'code' => $this->code,
-            'name' => $this->name,
-            'next_number' => $this->next_number,
-            'min_digits' => $this->min_digits,
-            'prefix' => $this->prefix,
-            'suffix' => $this->suffix,
-            'preview' => $this->preview,
-            'created_by' => $this->created_by,
-        ]);
-        foreach (Organization::getColumnData('id') as $org_id) {
-            $newModel = clone $model;
-            $newModel->org_id = $org_id;
-            $newModel->save();
-        }
-    }
-
-
 }

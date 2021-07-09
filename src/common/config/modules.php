@@ -22,38 +22,8 @@ $modules = [
     'conf' => [
         'class' => \backend\modules\conf\Module::class,
     ],
-    'core' => [
-        'class' => \backend\modules\core\Module::class,
-    ],
-    'reports' => [
-        'class' => \backend\modules\reports\Module::class,
-    ],
     'dashboard' => [
         'class' => \backend\modules\dashboard\Module::class,
-    ],
-    'help' => [
-        'class' => \backend\modules\help\Module::class,
-    ],
-    'accounting' => [
-        'class' => \backend\modules\accounting\Module::class,
-    ],
-    'product' => [
-        'class' => \backend\modules\product\Module::class,
-    ],
-    'saving' => [
-        'class' => \backend\modules\saving\Module::class,
-    ],
-    'loan' => [
-        'class' => \backend\modules\loan\Module::class,
-    ],
-    'subscription' => [
-        'class' => \backend\modules\subscription\Module::class,
-    ],
-    'payment' => [
-        'class' => \backend\modules\payment\Module::class,
-    ],
-    'workflow' => [
-        'class' => \backend\modules\workflow\Module::class,
     ],
 ];
 

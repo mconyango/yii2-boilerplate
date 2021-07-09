@@ -2,12 +2,10 @@
 
 use backend\modules\conf\settings\SystemSettings;
 use common\helpers\Lang;
-use common\helpers\Url;
 use common\widgets\select2\Select2;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use backend\modules\conf\models\Timezone;
-use backend\modules\core\models\Country;
 use common\helpers\Utils;
 
 /* @var $this yii\web\View */
@@ -51,20 +49,6 @@ $this->params['breadcrumbs'] = [
                         <?= $form->field($model, SystemSettings::KEY_COMPANY_EMAIL); ?>
                     <?= $form->field($model, SystemSettings::KEY_DEFAULT_TIMEZONE)->widget(Select2::class, [
                         'data' => Timezone::getListData(),
-                        'theme' => Select2::THEME_BOOTSTRAP,
-                        'pluginOptions' => [
-                            'allowClear' => false
-                        ],
-                    ]) ?>
-                    <?= $form->field($model, SystemSettings::KEY_DEFAULT_COUNTRY)->widget(Select2::class, [
-                        'data' => Country::getListData(),
-                        'theme' => Select2::THEME_BOOTSTRAP,
-                        'pluginOptions' => [
-                            'allowClear' => false
-                        ],
-                    ]) ?>
-                    <?= $form->field($model, SystemSettings::KEY_DEFAULT_CURRENCY)->widget(Select2::class, [
-                        'data' => \backend\modules\core\models\Currency::getListData(),
                         'theme' => Select2::THEME_BOOTSTRAP,
                         'pluginOptions' => [
                             'allowClear' => false

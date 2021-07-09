@@ -18,15 +18,5 @@ class ModulesAsset extends AssetBundle
         \backend\modules\auth\assets\Asset::class,
         \backend\modules\conf\assets\Asset::class,
         \backend\modules\dashboard\assets\Asset::class,
-        \backend\modules\reports\assets\Asset::class,
-        \backend\modules\core\assets\Asset::class,
-        \backend\modules\help\assets\Asset::class,
-        \backend\modules\product\assets\Asset::class,
-        \backend\modules\saving\assets\Asset::class,
-        \backend\modules\loan\assets\Asset::class,
-        \backend\modules\accounting\assets\Asset::class,
-        \backend\modules\subscription\assets\Asset::class,
-        \backend\modules\payment\assets\Asset::class,
-        \backend\modules\workflow\assets\Asset::class,
     ];
 }

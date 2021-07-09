@@ -2,19 +2,16 @@
 
 namespace backend\modules\conf\models;
 
-use backend\modules\core\models\Organization;
 use common\helpers\Lang;
 use common\models\ActiveRecord;
 use common\models\ActiveSearchInterface;
 use common\models\ActiveSearchTrait;
-use Yii;
 
 /**
  * This is the model class for table "conf_notif_types".
  *
  * @property int $id
  * @property string $template_id
- * @property integer $org_id
  * @property string $name
  * @property string $description
  * @property string $template
@@ -38,7 +35,6 @@ use Yii;
  * @property string $created_at
  * @property integer $created_by
  *
- * @property Organization $org
  */
 class NotifTypes extends ActiveRecord implements ActiveSearchInterface
 {
@@ -71,7 +67,6 @@ class NotifTypes extends ActiveRecord implements ActiveSearchInterface
             [['template'], 'string', 'max' => 500],
             [['email', 'phone'], 'string', 'max' => 1000],
             [['users', 'roles'], 'safe'],
-            [['org_id'], 'integer'],
             ['template', 'required', 'when' => function (NotifTypes $model) {
                 return $model->enable_internal_notification == true;
             }, 'whenClient' => "function (attribute, value) {
@@ -80,7 +75,7 @@ class NotifTypes extends ActiveRecord implements ActiveSearchInterface
             ],
             [['fa_icon_class'], 'string', 'max' => 30],
             [['max_notifications'], 'integer', 'min' => 1],
-            ['template_id', 'unique', 'targetAttribute' => ['org_id', 'template_id'], 'message' => 'You already have copy of this template for your organization.Please Update it instead of this template'],
+            ['template_id', 'unique', 'message' => 'You already have copy of this template.'],
             [['notification_time'], 'string', 'min' => 5, 'max' => 8],
             //[[self::SEARCH_FIELD], 'safe', 'on' => self::SCENARIO_SEARCH],
         ];
@@ -94,7 +89,6 @@ class NotifTypes extends ActiveRecord implements ActiveSearchInterface
         return [
             'id' => Lang::t('ID'),
             'name' => Lang::t('Name'),
-            'org_id' => Lang::t('Organization'),
             'template_id' => Lang::t('Template ID'),
             'description' => Lang::t('Description'),
             'template' => Lang::t('Internal Notification Template'),
@@ -169,15 +163,6 @@ class NotifTypes extends ActiveRecord implements ActiveSearchInterface
         parent::afterFind();
     }
 
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrg()
-    {
-        return $this->hasOne(Organization::class, ['id' => 'org_id']);
-    }
-
     /**
      * Get icon for the notification type
      * @param string $id
@@ -211,7 +196,6 @@ class NotifTypes extends ActiveRecord implements ActiveSearchInterface
         return [
             ['name', 'name'],
             'is_active',
-            'org_id',
             'template_id'
         ];
     }

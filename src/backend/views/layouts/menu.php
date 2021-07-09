@@ -25,6 +25,14 @@ $controller = Yii::$app->controller;
                 <a href="<?= Yii::$app->homeUrl ?>"><i class="fa fa-lg fa-fw fa-dashboard"></i>
                     <span class="menu-item-parent"><?= Lang::t('DASHBOARD') ?></span></a>
             </li>
+            <li class="<?= $controller->activeMenu === 1 ? 'active' : '' ?>">
+                <a href="<?= \common\helpers\Url::to(['/auth/user/index']) ?>"><i class="fa fa-lg fa-fw fa-users"></i>
+                    <span class="menu-item-parent"><?= Lang::t('USERS') ?></span></a>
+            </li>
+            <li class="<?= $controller->activeMenu === 1 ? 'active' : '' ?>">
+                <a href="<?= \common\helpers\Url::to(['/conf/settings/index']) ?>"><i class="fa fa-lg fa-fw fa-wrench"></i>
+                    <span class="menu-item-parent"><?= Lang::t('SETTINGS') ?></span></a>
+            </li>
         </ul>
     </nav>
     <span class="minifyme" data-action="minifyMenu">

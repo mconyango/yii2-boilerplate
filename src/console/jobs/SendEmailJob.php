@@ -90,11 +90,6 @@ class SendEmailJob extends BaseObject implements JobInterface
     public $id;
 
     /**
-     * @var int
-     */
-    public $org_id = null;
-
-    /**
      * @var string
      */
     public $host;
@@ -195,7 +190,6 @@ class SendEmailJob extends BaseObject implements JobInterface
         $outboxModel->date_queued = $this->created_at;
         $outboxModel->date_sent = DateUtils::mysqlTimestamp();
         $outboxModel->created_by = $this->created_by;
-        $outboxModel->org_id = $this->org_id;
         $outboxModel->attempts = $this->attempts;
 
         $outboxModel->save(false);

@@ -2,7 +2,6 @@
 
 namespace backend\modules\auth\models;
 
-use backend\modules\core\models\Organization;
 use common\helpers\Lang;
 use common\models\ActiveRecord;
 use common\models\ActiveSearchInterface;
@@ -17,12 +16,10 @@ use Yii;
  * @property string $description
  * @property integer $readonly
  * @property integer $level_id
- * @property integer $org_id
  * @property string $created_at
  * @property integer $created_by
  * @property int $is_active
  *
- * @property Organization $org
  */
 class Roles extends ActiveRecord implements ActiveSearchInterface
 {
@@ -44,10 +41,6 @@ class Roles extends ActiveRecord implements ActiveSearchInterface
         return $this->hasOne(UserLevels::class, ['id' => 'level_id']);
     }
 
-    public function getOrg()
-    {
-        return $this->hasOne(Organization::class, ['id' => 'org_id']);
-    }
     /**
      * @inheritdoc
      */
@@ -55,7 +48,7 @@ class Roles extends ActiveRecord implements ActiveSearchInterface
     {
         return [
             [['name'], 'required'],
-            [['readonly', 'level_id', 'is_active','org_id'], 'integer'],
+            [['readonly', 'level_id', 'is_active'], 'integer'],
             [['name'], 'string', 'max' => 128],
             [['description'], 'string', 'max' => 255],
             [['name'], 'unique', 'message' => Lang::t('{attribute} {value} already exists.')],
@@ -72,7 +65,6 @@ class Roles extends ActiveRecord implements ActiveSearchInterface
             'name' => Lang::t('Name'),
             'description' => Lang::t('Description'),
             'level_id' => Lang::t('Level'),
-            'org_id' => Lang::t('Organization'),
             'is_active' => Lang::t('Active'),
         ];
     }
@@ -85,7 +77,6 @@ class Roles extends ActiveRecord implements ActiveSearchInterface
         return [
             ['name', 'name'],
             'level_id',
-            'org_id',
             'is_active',
         ];
     }

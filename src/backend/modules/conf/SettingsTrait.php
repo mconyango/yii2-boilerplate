@@ -47,15 +47,14 @@ trait SettingsTrait
      * @param string $category
      * @param string $key
      * @param string $default
-     * @param null|int $org_id
      * @param bool $strict
      * @return null|string
      * @throws \yii\db\Exception
      */
-    public function get($category, $key = '', $default = '', $org_id = null, $strict = true)
+    public function get($category, $key = '', $default = '', $strict = true)
     {
         if ($strict) {
-            $qualifiedCategory = static::getQualifiedCategory($category, $org_id);
+            $qualifiedCategory = static::getQualifiedCategory($category);
         } else {
             $qualifiedCategory = $category;
         }
@@ -72,7 +71,7 @@ trait SettingsTrait
         }
 
         if (null === $val && $strict && $category !== $qualifiedCategory) {
-            return $this->get($category, $key, $default, $org_id, false);
+            return $this->get($category, $key, $default, false);
         }
         return $val;
     }
@@ -239,17 +238,10 @@ trait SettingsTrait
 
     /**
      * @param string $category
-     * @param null|int $account_id
      * @return string
      */
-    public static function getQualifiedCategory($category, $account_id = null)
+    public static function getQualifiedCategory($category)
     {
-        if (Utils::isWebApp() && !Yii::$app->user->getIsGuest() && Session::isOrganization()) {
-            $account_id = Session::accountId();
-        }
-        if (!empty($account_id)) {
-            $category .= '_org_' . $account_id;
-        }
         return $category;
     }
 

@@ -27,7 +27,4 @@ $controller = Yii::$app->controller;
        class="list-group-item <?= ($controller->activeSubMenu === Constants::SUBMENU_SECURITY) ? ' active' : '' ?>">
         <?= Lang::t('Security Settings') ?>
     </a>
-    <a href="<?= Url::to(['/conf/number-format/index']) ?>" class="list-group-item">
-        <?= Lang::t('Numbering formats') ?>
-    </a>
 </div>

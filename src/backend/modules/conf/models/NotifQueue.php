@@ -48,7 +48,7 @@ class NotifQueue extends ActiveRecord
     public static function push($notif_type_id, $item_id)
     {
         $model = static::loadModel(['notif_type_id' => $notif_type_id, 'item_id' => $item_id], false);
-        $notifModel = NotifTypes::loadModel(['template_id' => $notif_type_id, 'org_id' => null]);
+        $notifModel = NotifTypes::loadModel(['template_id' => $notif_type_id]);
 
         if ($notifModel === null){
             return false;

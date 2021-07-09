@@ -53,16 +53,6 @@ $controller = Yii::$app->controller;
                 <!-- END RIBBON -->
             </div>
         <?php endif; ?>
-        <?php if (isset($controller->enableHelpLink) && $controller->enableHelpLink): ?>
-            <div class="col-sm-2">
-                <div class="pull-right context-help-link">
-                    <a target="_blank" href="<?= \backend\modules\help\Help::getContentUrl($this->context) ?>">
-                        <i class="fa-2x fa fa-question-circle" data-toggle="tooltip" data-placement="top"
-                           title="Help Information for this module"></i>
-                    </a>
-                </div>
-            </div>
-        <?php endif; ?>
     </div>
     <!-- MAIN CONTENT -->
     <div id="content">

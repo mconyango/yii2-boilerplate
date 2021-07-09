@@ -14,21 +14,21 @@ sudo npm install bower -g
 
 ## Perform the following in your terminal
 ```sh
-# clone from online repo.
-git clone https://gitlab.com/competamillman/saccohub.git
+# clone from online repo. Note that this URL may depend on your individual gitlab account. Confirm the correct URL from gitlab account.
+git clone https://gitlab.com/fredmconyango/yii2-boilerplate.git
 
-# cd into the folder created. Defaults to saccohub
-cd saccohub
+# cd into the folder created. Defaults to boilerplate
+cd boilerplate
 
 # Create db.php file by copying the contents of db.sample.php into db.php
-cd _protected/common/config/
+cd src/common/config/
 sudo cp db.sample.php db.php
 
 # verify your database credentials, by editing the db config file
-vi _protected/common/config/db.php
+vi src/common/config/db.php
 
-# import the mysql database dump. Ensure that you have the database named saccohub first
-mysql -u root saccohub -p < _protected/data/saccohub.sql
+# import the mysql database dump. Ensure that you have the database named boilerplate first
+mysql -u root boilerplate -p < src/data/boilerplate.sql
 
 # install composer dependencies
 composer install
@@ -44,9 +44,9 @@ sudo chown -R $USER:$GROUP ~/.config
 # change permission of these folders
 sudo chmod -R 777 uploads/
 sudo chmod -R 777 assets/
-sudo chmod -R 777 _protected/backend/runtime/
-sudo chmod -R 777 _protected/console/runtime/
-sudo chmod -R 777 _protected/api/runtime/
+sudo chmod -R 777 src/backend/runtime/
+sudo chmod -R 777 src/console/runtime/
+sudo chmod -R 777 src/api/runtime/
 
 # Create env.php by copying the contents of env.sample.php into env.php
 sudo cp env.sample.php env.php
@@ -79,7 +79,7 @@ bower update
 ### update the database data
 Run the Yii migrations, so that you get the latest modifications
 ```sh
-cd _protected
+cd src
 ./yii migrate
 ```
 

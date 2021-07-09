@@ -228,50 +228,10 @@ MyApp.modules.auth = {};
     }
 }(jQuery));
 
-//toggle organization
-(function ($) {
-    "use strict";
-    let FORM = function (options) {
-        let defaultOptions = {
-            organizationWrapperSelector: '#organization-id-wrapper',
-            levelIdFieldSelector: '#users-level_id',
-        }
-        this.options = $.extend({}, defaultOptions, options || {});
-    }
-
-    FORM.prototype = {
-        toggleOrganization: function () {
-            let $this = this,
-                selector = $this.options.levelIdFieldSelector;
-            let _toggle = function (e) {
-                let val = $(e).val(),
-                    showOrganizationFlags = $(e).data('show-organization');
-                if (showOrganizationFlags.includes(parseInt(val))) {
-                    $($this.options.organizationWrapperSelector).show();
-                } else {
-                    $($this.options.organizationWrapperSelector).hide();
-                }
-            }
-            //on page load
-            _toggle(selector);
-            //on change
-            $(selector).on('change', function (event) {
-                _toggle(this);
-            })
-        }
-    };
-
-    MyApp.modules.auth.toggleOrganization = function (options) {
-        let obj = new FORM(options);
-        obj.toggleOrganization();
-    }
-}(jQuery));
-
 //init user create/update form
 (function ($) {
     "use strict";
     MyApp.modules.auth.initUserForm = function (options) {
-        MyApp.modules.auth.toggleOrganization(options);
         MyApp.modules.auth.autoGeneratePassword(options);
     }
 }(jQuery));

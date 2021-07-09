@@ -1,11 +1,12 @@
 <?php
+
 use backend\modules\conf\models\EmailTemplate;
 use common\widgets\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $model EmailTemplate*/
+/* @var $model EmailTemplate */
 ?>
 <?= GridView::widget([
     'searchModel' => $model,
@@ -17,13 +18,6 @@ use yii\helpers\Url;
         [
             'attribute' => 'template_id',
             'visible' => \backend\modules\auth\Session::isDev(),
-        ],
-        [
-            'attribute' => 'org_id',
-            'value' => function (EmailTemplate $model) {
-                return $model->getRelationAttributeValue('org', 'name');
-            },
-            // 'visible' => !\backend\modules\auth\Session::isOrganization(),
         ],
         [
             'attribute' => 'name',

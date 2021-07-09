@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
+
 /* @var $model \backend\modules\conf\models\NotifTypes */
+
 use backend\modules\auth\Session;
 use common\widgets\grid\GridView;
 use common\helpers\Utils;
@@ -20,13 +22,6 @@ use yii\helpers\Url;
             'attribute' => 'template_id',
             'visible' => Session::isDev(),
             'filter' => false,
-        ],
-        [
-            'attribute' => 'org_id',
-            'value' => function (\backend\modules\conf\models\NotifTypes $model) {
-                return $model->getRelationAttributeValue('org', 'name');
-            },
-            //'visible' => !\backend\modules\auth\Session::isOrganization(),
         ],
         [
             'attribute' => 'name',

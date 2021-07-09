@@ -33,7 +33,7 @@ use yii\web\NotFoundHttpException;
  */
 abstract class ActiveRecord extends AR
 {
-    use ControllerActionTrait, ReportsTrait;
+    use ControllerActionTrait;
 
     //used by getStats() function
     const STATS_TODAY = '1';

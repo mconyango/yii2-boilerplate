@@ -5,11 +5,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 /* @var $searchModel \backend\modules\auth\models\AuditTrail */
 /* @var $this yii\web\View */
-/* @var $orgModel \backend\modules\core\models\Organization*/
+/* @var $filterOptions array */
 ?>
 <div class="row">
     <div class="col-md-12">
-        <?= $this->render('@authModule/views/layouts/_tab',['orgModel'=>$orgModel]) ?>
+        <?= $this->render('@authModule/views/layouts/_tab', []) ?>
         <div class="tab-content padding-top-10">
             <?= $this->render('_filter', ['model' => $searchModel, 'filterOptions' => $filterOptions]); ?>
             <?= $this->render('_grid', ['model' => $searchModel, 'filterOptions' => $filterOptions]) ?>
